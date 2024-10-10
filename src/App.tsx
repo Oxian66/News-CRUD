@@ -26,15 +26,22 @@ const App: React.FC = () => {
   const handleCreateOrEdit = (news: News) => {
     if (editableNews) {
       // Редактирование
-      const updatedNews = newsList.map(item => item.id === news.id ? news : item);
+      const updatedNews = newsList.map((item) =>
+        item.id === news.id
+          ? { ...news, date: new Date().toLocaleDateString("ru-RU", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }
+          : {
+              ...item,
+              date: new Date().toLocaleDateString("ru-RU", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+            }
+      );
       setNewsList(updatedNews);
       saveNewsToStorage(updatedNews);
       message.success('Новость обновлена');
     } else {
       // Добавление
-      const updatedNews = [...newsList, { ...news, date: new Date().toLocaleDateString() }];
-      setNewsList(updatedNews);
-      saveNewsToStorage(updatedNews);
+      const addNews = [...newsList, { ...news, date: new Date().toLocaleDateString() }];
+      setNewsList(addNews);
+      saveNewsToStorage(addNews);
       message.success('Новость добавлена');
     }
     setIsModalVisible(false);
@@ -52,17 +59,25 @@ const App: React.FC = () => {
     setEditableNews(news);
     setIsModalVisible(true);
   };
-
+console.log(newsList)
   return (
     <Layout>
-      <Header>
-        <h1 style={{ color: 'white' }}>Новости</h1>
+      <Header style={{ display: "flex", alignItems: "center" }}>
+        <h1 style={{ color: "white" }}>Новости.RU - Тестовое задание</h1>
       </Header>
-      <Content style={{ padding: '20px' }}>
-        <Button type="primary" onClick={() => setIsModalVisible(true)} style={{ marginBottom: '20px' }}>
+      <Content style={{ padding: "20px" }}>
+        <Button
+          type="primary"
+          onClick={() => setIsModalVisible(true)}
+          style={{ marginBottom: "20px" }}
+        >
           Добавить новость
         </Button>
-        <NewsList newsList={newsList} onEdit={handleEdit} onDelete={handleDelete} />
+        <NewsList
+          newsList={newsList}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
         <NewsForm
           visible={isModalVisible}
           onCreate={handleCreateOrEdit}
@@ -73,7 +88,7 @@ const App: React.FC = () => {
           initialData={editableNews}
         />
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Новости ©2024</Footer>
+      <Footer style={{ textAlign: "center" }}>Новости ©2024</Footer>
     </Layout>
   );
 };

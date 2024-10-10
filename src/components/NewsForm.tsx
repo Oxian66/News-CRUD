@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Input, Modal } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { News } from '../types';
 
 interface NewsFormProps {
@@ -24,13 +24,15 @@ const NewsForm: React.FC<NewsFormProps> = ({ visible, onCreate, onCancel, initia
   }, [initialData, form]);
 
   const handleFinish = (values: Omit<News, 'id'>) => {
-    onCreate({ ...values, id: initialData ? initialData.id : new Date().toISOString() });
+    onCreate({
+      ...values,
+      id: initialData ? initialData.id : new Date().toISOString(),
+    });
     form.resetFields();
   };
 
   return (
     <Modal
-      visible={visible}
       title={isEditMode ? 'Редактировать новость' : 'Добавить новость'}
       okText={isEditMode ? 'Сохранить' : 'Добавить'}
       cancelText="Отмена"

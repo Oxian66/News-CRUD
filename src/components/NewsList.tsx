@@ -1,6 +1,7 @@
 import React from 'react';
-import { List, Button, Space, Typography } from 'antd';
+import { List, Button, Tooltip, Typography } from 'antd';
 import { News } from '../types';
+import { DeleteFilled, EditFilled } from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -14,17 +15,33 @@ const NewsList: React.FC<NewsListProps> = ({ newsList, onEdit, onDelete }) => {
   return (
     <List
       dataSource={newsList}
+      itemLayout="vertical"
       renderItem={(item) => (
         <List.Item
           actions={[
-            <Button onClick={() => onEdit(item)}>Редактировать</Button>,
-            <Button danger onClick={() => onDelete(item.id)}>Удалить</Button>,
+            <Tooltip title={"Редактировать"}>
+              <Button
+                type={"primary"}
+                onClick={() => onEdit(item)}
+                shape="circle"
+                icon={<EditFilled />}
+              />
+              ,
+            </Tooltip>,
+
+            <Tooltip title={"Удалить"}>
+              <Button
+                danger
+                onClick={() => onDelete(item.id)}
+                type={"primary"}
+                shape="circle"
+                icon={<DeleteFilled />}
+              />
+              ,
+            </Tooltip>,
           ]}
         >
-          <List.Item.Meta
-            title={item.title}
-            description={item.date}
-          />
+          <List.Item.Meta title={item.title} description={item.date} />
           <Text>{item.content}</Text>
         </List.Item>
       )}
