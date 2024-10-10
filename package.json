@@ -1,5 +1,6 @@
 {
   "name": "news-crud",
+  "hamepage": "https://github.com/Oxian66/News-CRUD",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
