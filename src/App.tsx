@@ -39,7 +39,7 @@ const App: React.FC = () => {
       message.success('Новость обновлена');
     } else {
       // Добавление
-      const addNews = [...newsList, { ...news, date: new Date().toLocaleDateString() }];
+      const addNews = [...newsList, { ...news, date: new Date().toLocaleDateString("ru-RU", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }];
       setNewsList(addNews);
       saveNewsToStorage(addNews);
       message.success('Новость добавлена');
@@ -59,7 +59,7 @@ const App: React.FC = () => {
     setEditableNews(news);
     setIsModalVisible(true);
   };
-console.log(newsList)
+
   return (
     <Layout>
       <Header style={{ display: "flex", alignItems: "center" }}>

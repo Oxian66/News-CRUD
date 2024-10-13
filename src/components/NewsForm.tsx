@@ -33,6 +33,7 @@ const NewsForm: React.FC<NewsFormProps> = ({ visible, onCreate, onCancel, initia
 
   return (
     <Modal
+      open={visible}
       title={isEditMode ? 'Редактировать новость' : 'Добавить новость'}
       okText={isEditMode ? 'Сохранить' : 'Добавить'}
       cancelText="Отмена"
